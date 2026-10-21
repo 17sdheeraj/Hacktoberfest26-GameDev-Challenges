@@ -9,8 +9,13 @@ public class PlayerMovement : MonoBehaviour
     public float maxStretch = 0.3f;     // How much the ball deforms at max speed
     public float scaleLerpSpeed = 15f;  // How smoothly it transitions between shapes
 
+    [Header("Growth Settings (E Key)")]
+    public float growMultiplier = 1.8f; // How much bigger the ball gets when E is held
+    public float growLerpSpeed = 12f;   // How smoothly it grows and shrinks
+
     private Rigidbody2D rb;
     private Vector3 originalScale;
+    private float currentGrowth = 1f;
 
     void Start()
     {
@@ -33,12 +38,19 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(x, y).normalized;
         rb.linearVelocity = movement * currentSpeed;
 
-        // Apply Squash and Stretch
+        // Handle E key growth input smoothly
+        float targetGrowth = Input.GetKey(KeyCode.E) ? growMultiplier : 1f;
+        currentGrowth = Mathf.Lerp(currentGrowth, targetGrowth, Time.deltaTime * growLerpSpeed);
+
+        // Apply Squash, Stretch, and Growth
         HandleSquashAndStretch(movement);
     }
 
     void HandleSquashAndStretch(Vector2 movement)
     {
+        // The base scale dynamically updates based on whether the E key is held
+        Vector3 currentBaseScale = originalScale * currentGrowth;
+
         if (movement.sqrMagnitude > 0.01f)
         {
             // Calculate stretch intensity based on actual velocity vs max possible speed
@@ -50,10 +62,10 @@ public class PlayerMovement : MonoBehaviour
             float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            // Stretch along the X-axis (direction of travel) and squash along the Y-axis
+            // Stretch along the X-axis (direction of travel) and squash along the Y-axis, scaling with E growth
             Vector3 targetScale = new Vector3(
-                originalScale.x * (1f + stretch),
-                originalScale.y * (1f - stretch),
+                currentBaseScale.x * (1f + stretch),
+                currentBaseScale.y * (1f - stretch),
                 1f
             );
 
@@ -61,8 +73,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Smoothly return to normal scale when the ball stops moving
-            transform.localScale = Vector3.Lerp(transform.localScale, originalScale, Time.deltaTime * scaleLerpSpeed);
+            // Smoothly return to the current growth scale (or original size if E is released) when stopped
+            transform.localScale = Vector3.Lerp(transform.localScale, currentBaseScale, Time.deltaTime * scaleLerpSpeed);
         }
     }
 }
