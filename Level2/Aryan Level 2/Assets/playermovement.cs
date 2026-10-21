@@ -14,12 +14,14 @@ public class PlayerMovement : MonoBehaviour
     public float growLerpSpeed = 12f;   // How smoothly it grows and shrinks
 
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
     private Vector3 originalScale;
     private float currentGrowth = 1f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         originalScale = transform.localScale;
     }
 
@@ -41,6 +43,12 @@ public class PlayerMovement : MonoBehaviour
         // Handle E key growth input smoothly
         float targetGrowth = Input.GetKey(KeyCode.E) ? growMultiplier : 1f;
         currentGrowth = Mathf.Lerp(currentGrowth, targetGrowth, Time.deltaTime * growLerpSpeed);
+
+        // Handle P key invisibility (turns off SpriteRenderer while P is held down)
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = !Input.GetKey(KeyCode.P);
+        }
 
         // Apply Squash, Stretch, and Growth
         HandleSquashAndStretch(movement);
