@@ -21,7 +21,7 @@ Example:
 
 Pressing **"E"** could make your character:
 
-- Spawn a burger 🍔
+- Spawn a burger png 🍔
 - Summon an object
 - Change size
 - Activate a funny ability
