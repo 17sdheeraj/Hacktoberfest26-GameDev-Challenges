@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(Dash());
         }
 
-        if (Keyboard.current.eKey.wasPressedThisFrame)
+        if (Keyboard.current.tKey.wasPressedThisFrame)
             Teleport();
 
         if (Keyboard.current.qKey.wasPressedThisFrame)
