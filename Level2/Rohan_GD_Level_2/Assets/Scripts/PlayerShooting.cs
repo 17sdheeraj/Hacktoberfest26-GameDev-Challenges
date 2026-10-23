@@ -7,6 +7,9 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Gun gun;
     [SerializeField] private SpriteRenderer playerSprite;
 
+    // Super Saiyan ability reference
+    [SerializeField] private SuperSaiyanAbility superSaiyan;
+
     private void Awake()
     {
         if (mainCamera == null)
@@ -17,11 +20,15 @@ public class PlayerShooting : MonoBehaviour
 
         if (playerSprite == null)
             playerSprite = GetComponentInChildren<SpriteRenderer>();
+
+        if (superSaiyan == null)
+            superSaiyan = GetComponent<SuperSaiyanAbility>();
     }
 
     private void Update()
     {
-        if (mainCamera == null || gun == null) return;
+        if (mainCamera == null || gun == null)
+            return;
 
         Vector3 mousePosition =
             mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -29,7 +36,8 @@ public class PlayerShooting : MonoBehaviour
         Vector2 direction =
             (Vector2)(mousePosition - gun.transform.position);
 
-        if (direction.sqrMagnitude < 0.001f) return;
+        if (direction.sqrMagnitude < 0.001f)
+            return;
 
         // Rotate the gun toward the mouse
         gun.transform.right = direction.normalized;
@@ -38,10 +46,18 @@ public class PlayerShooting : MonoBehaviour
         if (playerSprite != null)
             playerSprite.flipX = direction.x < 0f;
 
+        // Shoot while holding the left mouse button
         if (Input.GetMouseButton(0))
-{
-    Debug.Log("Shooting input detected");
-    gun.Shoot();
-}
+        {
+            gun.Shoot();
+        }
+    }
+
+    public float GetFireRateMultiplier()
+    {
+        if (superSaiyan != null)
+            return superSaiyan.FireRateMultiplier;
+
+        return 1f;
     }
 }
