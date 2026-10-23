@@ -524,6 +524,7 @@ GameObject:
   - component: {fileID: 801979608}
   - component: {fileID: 801979607}
   - component: {fileID: 801979611}
+  - component: {fileID: 801979612}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -699,6 +700,18 @@ MonoBehaviour:
   teleportDistance: 5
   specialDuration: 4
   specialSpeedMultiplier: 2
+--- !u!114 &801979612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801979606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da6ea235618475a448dd227a2e5f6d2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerColorChanger
 --- !u!1 &900134531
 GameObject:
   m_ObjectHideFlags: 0
