@@ -105,7 +105,9 @@ public class PlayerMovement : MonoBehaviour
         if (Keyboard.current.qKey.wasPressedThisFrame)
             StartCoroutine(SpecialAbility());
 
-        if (Keyboard.current.rKey.wasPressedThisFrame)
+        if (Keyboard.current.rKey.wasPressedThisFrame &&
+        !Keyboard.current.leftShiftKey.isPressed &&
+        !Keyboard.current.rightShiftKey.isPressed)
             ChangeSize();
     }
 
