@@ -6,6 +6,20 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    IEnumerator SlowPlayer()
+{
+    isSlowed = true;
+    moveSpeed = normalMoveSpeed * 0.5f;
+
+    yield return new WaitForSeconds(10f);
+
+    moveSpeed = normalMoveSpeed;
+    isSlowed = false;
+    slowCoroutine = null;
+}
+    private Coroutine slowCoroutine;
+    private bool isSlowed = false;
+    private float normalMoveSpeed;
     [Header("Movement")]
     public float moveSpeed = 5f;
     public float sprintMultiplier = 1.7f;
@@ -34,12 +48,27 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        normalMoveSpeed = moveSpeed;
         rb = GetComponent<Rigidbody2D>();
         originalScale = transform.localScale;
     }
 
     void Update()
     {
+        if (Keyboard.current != null)
+{
+    bool shiftPressed =
+        Keyboard.current.leftShiftKey.isPressed ||
+        Keyboard.current.rightShiftKey.isPressed;
+
+    if (shiftPressed && Keyboard.current.sKey.wasPressedThisFrame)
+    {
+        if (slowCoroutine != null)
+            StopCoroutine(slowCoroutine);
+
+        slowCoroutine = StartCoroutine(SlowPlayer());
+    }
+}
         ReadMovement();
         HandleAbilities();
     }
@@ -92,8 +121,14 @@ public class PlayerMovement : MonoBehaviour
             jumpsRemaining--;
         }
 
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame ||
-            Keyboard.current.rightShiftKey.wasPressedThisFrame)
+        bool shiftPressed =
+        Keyboard.current.leftShiftKey.isPressed ||
+        Keyboard.current.rightShiftKey.isPressed;
+
+        if (Keyboard.current.sKey.isPressed &&
+        !shiftPressed &&
+        !isSlowed)
+
         {
             if (dashReady)
                 StartCoroutine(Dash());
