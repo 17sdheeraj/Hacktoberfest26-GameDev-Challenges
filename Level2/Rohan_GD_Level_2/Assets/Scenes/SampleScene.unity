@@ -2824,6 +2824,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8393001791046734250, guid: bfb4b5771d6f7f54d92a1e1999af1e3a, type: 3}
   firePoint: {fileID: 501788427}
   fireRate: 10
+  playerShooting: {fileID: 0}
 --- !u!1 &1920383252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,6 +2840,7 @@ GameObject:
   - component: {fileID: 1920383258}
   - component: {fileID: 1920383259}
   - component: {fileID: 1920383260}
+  - component: {fileID: 1920383261}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Untagged
@@ -2964,6 +2966,7 @@ MonoBehaviour:
   speed: 5
   sprintMultiplier: 1.75
   body: {fileID: 1920383253}
+  superSaiyan: {fileID: 0}
 --- !u!60 &1920383258
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -3096,6 +3099,7 @@ MonoBehaviour:
   mainCamera: {fileID: 519420031}
   gun: {fileID: 0}
   playerSprite: {fileID: 1920383254}
+  superSaiyan: {fileID: 0}
 --- !u!114 &1920383260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3114,6 +3118,26 @@ MonoBehaviour:
   dashParticles: {fileID: 264555246}
   playerSprite: {fileID: 1920383254}
   ghostInterval: 0.04
+--- !u!114 &1920383261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920383252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12ab595ef40e7ba459b4b8cf5489cd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuperSaiyanAbility
+  activationKey: 101
+  duration: 6
+  cooldown: 12
+  speedMultiplier: 1.5
+  fireRateMultiplier: 1.5
+  playerSprite: {fileID: 1920383254}
+  normalSprite: {fileID: 7532518241398506921, guid: 8ea0ad26ff8393f4dae9f2bf010a6043, type: 3}
+  superSaiyanSprite: {fileID: -4070734839033743643, guid: a0ac33f1fdf0c1d4497ce4a3c54b1750, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
